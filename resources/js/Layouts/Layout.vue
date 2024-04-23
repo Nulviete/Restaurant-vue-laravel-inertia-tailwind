@@ -1,18 +1,66 @@
 <template>
-    <div class="container mx-auto ">
-        <div class="navbar text-4xl text-center bg-red-200 h-24 py-auto content-center">Super good restaurant, awesome!</div>
+    <div class="mx-auto ">
+        <div>
+           <div class="navbar text-4xl text-center bg-red-200 h-24 py-auto content-center">Super good restaurant, awesome!
+            <ul class="flex flex-row justify-center text-lg gap-4 pt-4">
+                <li id="item" class="item" @click="active(0); showSoups = !showSoups; showMains = false; showDeserts = false;">Soups</li>
+                <li id="item" class="item" @click="active(1); showMains = !showMains; showSoups = false; showDeserts = false;">Main dishes</li>
+                <li id="item" class="item" @click="active(2); showDeserts = !showDeserts; showMains = false; showSoups = false;">Deserts</li>
+            </ul>
+        </div>
+        <div class="user absolute right-0 top-10 pr-5">
+            <Link href="/login" class="pr-5">Login</Link>
 
-        <slot />
-        <div class="footer">Footer</div>
+        </div>
+        </div>
+
+
+            <div class="bg-blue-100 mx-auto pl-40 container">
+                <slot />
+            </div>
+
+        <div class="footer text-4xl text-center bg-gray-400 h-16 py-auto content-center">Footer</div>
     </div>
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
+import { useFoodStore } from '../Stores/FoodStore'
+import { Link } from '@inertiajs/vue3'
+
+const store = useFoodStore()
+const { showSoups, showMains, showDeserts } = storeToRefs(store)
+
+const isActive = ref(false)
+
+const items = document.getElementsByClassName('item')
+
+const active = (index) => {
+    // if selected is already selected, remove class
+    if (items.item(index).classList.contains('active')) {
+        return  items.item(index).classList.remove('active')
+    }
+    // cancel all active classes
+    for (let i in items) {
+        items.item(i).classList.remove('active')
+    }
+    // add active class to selected
+    items.item(index).classList.add('active')
+}
+
+
 
 </script>
 
 <style lang="scss" scoped>
 .container{
     background-color: rgb(235, 243, 245);
+}
+.navbar li:hover{
+    cursor: pointer;
+}
+.active {
+    color: white;
 }
 </style>

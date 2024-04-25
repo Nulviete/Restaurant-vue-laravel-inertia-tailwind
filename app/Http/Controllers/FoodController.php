@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
+use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class FoodController extends Controller
@@ -32,7 +34,14 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $food = Food::create($data);
+
+        $file = $request->file('file');
+
+        Storage::put(public_path('images'), 'asd');
+
     }
 
     /**

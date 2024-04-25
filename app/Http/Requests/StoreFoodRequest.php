@@ -22,7 +22,9 @@ class StoreFoodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'category' => 'required',
+            'description' => 'required',
         ];
     }
 }

@@ -25,7 +25,7 @@
 
 <script setup>
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { useFoodStore } from '../Stores/FoodStore'
 import { Link } from '@inertiajs/vue3'
 
@@ -48,6 +48,7 @@ const active = (index) => {
     // add active class to selected
     items.item(index).classList.add('active')
 }
+
 
 
 

@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\FoodController;
+
 
 Route::get('/', [FoodController::class, 'index']);
+Route::post('food', [FoodController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

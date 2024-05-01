@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::get('/', [FoodController::class, 'index']);
+Route::get('/', [FoodController::class, 'index'])->name('index');
 Route::post('food', [FoodController::class, 'store']);
+
+Route::get('/detail/{food}', [FoodController::class, 'show']);
+Route::put('/food/update/{food}', [FoodController::class, 'update'])->name('food.update');
+Route::delete('/food/delete/{food}', [FoodController::class, 'destroy'])->name('food.delete');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

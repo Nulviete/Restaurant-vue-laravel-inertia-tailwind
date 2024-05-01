@@ -6,8 +6,12 @@ use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
 use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
+
+use function Pest\Laravel\get;
 
 class FoodController extends Controller
 {
@@ -34,14 +38,19 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        $data = $request->validated();
+        $fileName = $request->input('name') . '.jpeg';
 
-        $food = Food::create($data);
+        if ($request->hasFile('image')) {
+            $request->file('image')->storeAs('public/images', $fileName);
+        }
 
-        $file = $request->file('file');
+        Food::create([
+            'name' => $request->input('name'),
+            'category' => $request->input('category'),
+            'description' => $request->input('description'),
+        ]);
 
-        Storage::put(public_path('images'), 'asd');
-
+        return Redirect::route('index');
     }
 
     /**
@@ -49,7 +58,9 @@ class FoodController extends Controller
      */
     public function show(Food $food)
     {
-        //
+        return Inertia::render('Detail', [
+            'food' => $food
+        ]);
     }
 
     /**
@@ -65,7 +76,16 @@ class FoodController extends Controller
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
-        //
+        $data = $request->validated();
+
+        $oldFile = 'public/images/' . $food->name . '.jpeg';
+        $newFile = 'public/images/' . $request->input('name') . '.jpeg';
+
+        $food->update($data);
+
+        Storage::move($oldFile, $newFile);
+
+        return Redirect::route('index');
     }
 
     /**
@@ -73,6 +93,11 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
-        //
+        $food->delete();
+
+        Storage::delete('public/images/' . $food->name . '.jpeg');
+
+
+        return Redirect::route('index');
     }
 }

@@ -8,6 +8,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+
 </script>
 
 <template>
@@ -50,6 +52,7 @@ const showingNavigationDropdown = ref(false);
                                             >
                                                 {{ $page.props.auth.user.name }}
 
+
                                                 <svg
                                                     class="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +78,7 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
                         </div>
+
 
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">

@@ -23,8 +23,9 @@ class StoreFoodRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category' => 'required',
+            'category' => 'required|min:1',
             'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg',
         ];
     }
 }

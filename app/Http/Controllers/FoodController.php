@@ -95,9 +95,10 @@ class FoodController extends Controller
     {
         $food->delete();
 
-        Storage::delete('public/images/' . $food->name . '.jpeg');
+        if (Storage::delete('public/images/' . $food->name . '.jpeg')) {
+            return Redirect::route('index');
+        }
 
 
-        return Redirect::route('index');
     }
 }

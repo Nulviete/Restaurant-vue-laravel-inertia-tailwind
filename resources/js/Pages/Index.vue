@@ -17,9 +17,7 @@
             </div>
 
         </div>
-        <div>
-            <!-- {{ $page.props.auth.user.name }} -->
-        </div>
+
     </div>
 </template>
 
@@ -44,14 +42,20 @@ let foodsToDisplay = ref()
 
 store.getFoods(props.foods)
 
-onMounted(() =>{
-    foodsToDisplay.value = foodss.value
+
+
+watchEffect(() => {
+    if(props.foods){
+        foodsToDisplay.value = props.foods
+        console.log(props.foods)
+    }
 })
+
 watchEffect(() => {
     if (showSoups.value) foodsToDisplay.value = soups.value
     if (showMains.value) foodsToDisplay.value = mains.value
     if (showDeserts.value) foodsToDisplay.value = deserts.value
-    if(!showSoups.value && !showMains.value && !showDeserts.value) foodsToDisplay.value = foodss.value
+    if(!showSoups.value && !showMains.value && !showDeserts.value) foodsToDisplay.value = props.foods
 })
 
 const destroy = (id) => {

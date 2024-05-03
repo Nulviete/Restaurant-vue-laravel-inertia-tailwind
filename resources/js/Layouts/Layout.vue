@@ -8,8 +8,18 @@
                 <li id="item" class="item" @click="active(2); showDeserts = !showDeserts; showMains = false; showSoups = false;">Deserts</li>
             </ul>
         </div>
-        <div class="user absolute right-0 top-10 pr-5">
-            <Link href="/login" class="pr-5">Login</Link>
+        <div v-if="$page.props.auth.user" class="user absolute right-0 top-10 pr-5 justify-center mx-auto">
+            <div class="text-center">
+               {{ $page.props.auth.user.name }}
+            </div>
+            <div>
+                <Link :href="route('dashboard')" method="get" class="text-center mx-auto bg-green-400 px-5 py-1 mr-2 rounded-md hover:bg-green-200 duration-500">Add Food</Link>
+            <Link :href="route('logout')" method="post" class="text-center mx-auto bg-green-400 px-5 py-1 rounded-md hover:bg-green-200 duration-500">Logout</Link>
+            </div>
+
+        </div>
+        <div v-else class="user absolute right-0 top-10 pr-5">
+            <Link href="/login" class="pr-5 bg-green-400 rounded-md hover:bg-green-200 duration-500 px-5 py-1">Login</Link>
 
         </div>
         </div>

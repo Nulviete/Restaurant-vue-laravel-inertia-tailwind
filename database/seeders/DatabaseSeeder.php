@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Food::factory(20)->create();
+        // Food::factory(2)->create();
 
+        User::create([
+            'name' => 'Admin',
+            'email' => 'test@test.com',
+            'password' => 'password',
+            ]);
     }
 }

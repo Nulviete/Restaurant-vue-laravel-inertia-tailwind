@@ -16,5 +16,14 @@ export default defineConfig({
                 },
             },
         }),
+
     ],
+    define: {
+            __APP_URL__: JSON.stringify(process.env.VITE_APP_URL || 'http://localhost:8000'),
+    },
+    server: {
+        host: '127.0.0.1',
+        port: 5173,
+        strictPort: true,
+    }
 });

@@ -14,7 +14,7 @@
             </div>
             <div>
                 <Link :href="route('dashboard')" method="get" class="text-center mx-auto bg-green-400 px-5 py-1 mr-2 rounded-md hover:bg-green-200 duration-500">Add Food</Link>
-            <Link :href="route('logout')" method="post" class="text-center mx-auto bg-green-400 px-5 py-1 rounded-md hover:bg-green-200 duration-500">Logout</Link>
+            <Link :href="route('logout')" method="post" as="button" class="text-center mx-auto bg-green-400 px-5 py-1 rounded-md hover:bg-green-200 duration-500">Logout</Link>
             </div>
 
         </div>

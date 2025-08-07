@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
-use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
-use function Pest\Laravel\get;
+use Log;
+
 
 class FoodController extends Controller
 {
@@ -20,9 +19,9 @@ class FoodController extends Controller
      */
     public function index()
     {
-       return Inertia::render('Index', [
-        'foods' => Food::all()
-       ]);
+        return Inertia::render('Index', [
+            'foods' => Food::all()
+        ]);
     }
 
     /**
@@ -38,19 +37,15 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        $fileName = $request->input('name') . '.jpeg';
+        $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $request->file('image')->storeAs('public/images', $fileName);
-        }
+        $food = Food::create($data);
 
-        Food::create([
-            'name' => $request->input('name'),
-            'category' => $request->input('category'),
-            'description' => $request->input('description'),
-        ]);
+        $food
+            ->addMediaFromRequest('image')
+            ->toMediaCollection();
 
-        return Redirect::route('index');
+        return inertia()->location(route('index'));
     }
 
     /**
@@ -93,12 +88,11 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
+        $food->clearMediaCollection(); // smaže obrázky
+
         $food->delete();
 
-        if (Storage::delete('public/images/' . $food->name . '.jpeg')) {
-            return Redirect::route('index');
-        }
-
+        return Redirect::route('index');
 
     }
 }

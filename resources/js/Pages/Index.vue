@@ -8,7 +8,7 @@
             <div class="italic pl-14">{{ food.description }} - {{ food.category }}</div>
             </div>
             <div class="right flex flex-row items-center">
-                <img :src="`/storage/images/${food.name}.jpeg`" alt="">
+                <img :src="food.image_url" alt="">
                 <div>
                     <Link :href="`/detail/${food.id}`" class="bg-pink-300 p-2 ml-8 border rounded-md hover:bg-pink-400 ease-in duration-200">Detail</Link>
                     <button @click="destroy(food.id)" class="bg-red-700 text-white p-2 ml-2 border rounded-md hover:bg-red-500 ease-in duration-200">Delete</button>
@@ -47,7 +47,6 @@ store.getFoods(props.foods)
 watchEffect(() => {
     if(props.foods){
         foodsToDisplay.value = props.foods
-        console.log(props.foods)
     }
 })
 

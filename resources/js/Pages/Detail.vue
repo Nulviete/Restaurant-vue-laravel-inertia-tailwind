@@ -30,11 +30,6 @@ const form = useForm({
     description: props.food.description
 })
 
-watchEffect(() => {
-    if(form) {
-        console.log(form)
-    }
-})
 
 </script>
 
